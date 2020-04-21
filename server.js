@@ -2,45 +2,40 @@ const express = require('express');
 const app = express();
 const uuidv4 = require('uuid/v4')
 
+const db = require('./db');
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-const db = [
-  { id: 1, author: 'John Doe', text: 'This company is worth every coin!' },
-  { id: 2, author: 'Amanda Doe', text: 'They really know how to make you happy.' },
-  { id: 3, author: 'John Doe', text: 'This company is worth every coin!' },
-  { id: 4, author: 'Amanda Doe', text: 'They really know how to make you happy.' },
-];
-
 app.get('/testimonials', (req, res) => {
-  res.json(db);
+  res.json(db.testimonials);
 });
 
 app.get('/testimonials/random', (req, res) => {
-  const randomItem = db[Math.floor(Math.random()*db.length)];
+  const randomItem = db.testimonials[Math.floor(Math.random()*db.testimonials.length)];
   res.json(randomItem);
 });
 
 app.get('/testimonials/:id', (req, res) => {
-  res.json(db.filter(item => item.id == req.params.id));
+  res.json(db.testimonials.filter(item => item.id == req.params.id));
 });
 
 app.post('/testimonials', (req, res) => { 
   const { author, text } = req.body
-  const payload = {
+  const opinion = {
     id: uuidv4(),
     author: author,
     text: text, 
   };
-  db.push(payload);
+  db.testimonials.push(opinion);
   res.json({ message: 'OK' });
 });
 
 app.delete('/testimonials/:id', (req, res) => {
 
-  const opinion = db.filter(item => item.id == req.params.id);
-  const index = db.indexOf(opinion);
-  db.splice(index, 1);
+  const opinion = db.testimonials.filter(item => item.id == req.params.id);
+  const index = db.testimonials.indexOf(opinion);
+  db.testimonials.splice(index, 1);
 
   res.json({ message: 'OK' });
 });
@@ -55,9 +50,9 @@ app.put('/testimonials/:id', (req, res) => {
     text: text
   }
 
-  const opinion = db.filter(item => item.id == req.params.id);
-  const index = db.indexOf(opinion);
-  db[index] = changedTestimonial;
+  const opinion = db.testimonials.filter(item => item.id == req.params.id);
+  const index = db.testimonials.indexOf(opinion);
+  db.testimonials[index] = changedTestimonial;
 
   res.json({ message: 'OK' });
 });
