@@ -12,5 +12,5 @@
   "scripts": {
     "start": "nodemon server.js",
     "build": "cd client && yarn install && yarn build"
-  },
+  }
 }
