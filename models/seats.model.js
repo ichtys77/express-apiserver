@@ -7,4 +7,4 @@ const seatSchema = new mongoose.Schema({
   email: { type: String, required: true },
 });
 
-module.exports = mongoose.model('Seats', seatSchema);
+module.exports = mongoose.model('Seat', seatSchema);

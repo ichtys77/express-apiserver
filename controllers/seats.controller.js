@@ -37,6 +37,7 @@ exports.postNew = async (req, res) => {
         }
       );
       await newSeat.save();
+      req.io.emit('seatsUpdated', await Seat.find());
       res.json({newSeat});
   
     } catch(err) {

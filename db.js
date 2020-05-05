@@ -1,4 +1,4 @@
-const db = {
+/* const db = {
 
 testimonials: [
   { id: 1, author: 'John Doe', text: 'This company is worth every coin!' },
@@ -24,4 +24,4 @@ seats: [
 
 };
 
-module.exports = db;
+module.exports = db; */
