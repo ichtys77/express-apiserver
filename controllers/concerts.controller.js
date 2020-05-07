@@ -14,8 +14,12 @@ exports.getById = async (req, res) => {
 
     try {
       const concert = await Concert.findById(req.params.id);
-      if(!concert) res.status(404).json({ message: 'Not found' });
-      else res.json(concert);
+      if(!concert) {
+        res.status(404).json({ message: 'Not found' });
+      }
+      else {
+        res.json(concert);
+      }
     }
     catch(err) {
       res.status(500).json({ message: err });
@@ -58,7 +62,9 @@ exports.edit = async (req, res) => {
         await concert.save();
         res.json({ concert });
       }
-      else res.status(404).json({ message: 'Not found...' });
+      else { 
+      res.status(404).json({ message: 'Not found...' });
+      }
     }
     catch(err) {
       res.status(500).json({ message: err });
@@ -74,7 +80,9 @@ exports.deleteById = async (req, res) => {
       await Concert.deleteOne({ _id: req.params.id });
       res.json(concert);
     }
-    else res.status(404).json({ message: 'Not found...' });
+    else {
+      res.status(404).json({ message: 'Not found...' });
+    }
   }
   catch(err) {
     res.status(500).json({ message: err });
