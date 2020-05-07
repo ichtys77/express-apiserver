@@ -26,9 +26,6 @@ app.use('/api', testimonialsRoutes);
 app.use('/api', concertsRoutes);
 app.use('/api', seatsRoutes);
 
-app.use((req, res) => {
-  res.status(404).json({ message: 'Not found...' });
-});
 
 mongoose.connect('mongodb+srv://ichtys77:!aabb1234@cluster0-wufx8.azure.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
@@ -42,13 +39,17 @@ const server = app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running on port: 8000');
 });
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
+
+app.use((req, res) => {
+  res.status(404).json({ message: 'Not found...' });
+});
+
 const io = socket(server);
 
 io.on('connection', () => {
   console.log('New socket!')
-});
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
