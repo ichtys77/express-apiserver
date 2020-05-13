@@ -34,6 +34,7 @@ describe('GET /api/concerts', () => {
     const res = await request(server).get('/api/concerts/price/day/1');
     expect(res.status).to.be.equal(200);
     expect(res.body).to.be.an('array');
+    expect(res.body).to.not.be.null;
     expect(res.body.length).to.be.equal(3);
   });
 });
