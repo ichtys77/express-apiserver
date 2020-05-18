@@ -1,4 +1,5 @@
 const Seat = require('../models/seats.model');
+const sanitize = require('mongo-sanitize');
 
 exports.getAll = async (req, res) => {
     try {
@@ -31,7 +32,8 @@ exports.postNew = async (req, res) => {
   
     try {
   
-      const { day, seat, client, email } = req.body;
+      const clean = sanitize(req.body);
+      const { day, seat, client, email } = clean;
       const newSeat = new Seat(
         {         
           day: day,
